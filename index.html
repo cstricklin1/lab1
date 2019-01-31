@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!--Adding the Merriweather font.-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Merriweather">
+        <style>
+            body {
+                font-family: 'Merriweather', serif;
+                font-size: 14px;
+            }
+        </style>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <style>
+        /*wrapper to make card overlay map*/
+            #wrapper { position: relative; }
+            #over_map { position: absolute; top: 100px; left: 10px; z-index: 99; }
+
+        /* Used code from this tutorial:
+        https://developers.google.com/maps/documentation/javascript/adding-a-google-map
+        Changed lat and long, location text, and added our own API key
+        Set map to full page using code from this tutorial:
+        https://developers.google.com/maps/documentation/javascript/importing_data
+
+        Set the size of the div element that contains the map */
+
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Logo</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="sass.html">Sass</a></li>
+            <li><a href="badges.html">Components</a></li>
+            <li><a href="collapsible.html">JavaScript</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+
+        <div id="wrapper">
+
+
+            <div id="over_map">
+                <div class="row" style="">
+                    <div class="col s12 m6 l6">
+                        <div class="card white">
+                            <div class="card-content black-text">
+                                <span class="card-title">Welcome to LitMaps!</span>
+                                <p>Explore the literary world around you. Just click on the markers
+                                    to see what fiction has been written about the real landmarks
+                                    in your neighborhood.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+<!--The div element for the map-->
+<div id="map" style="z-index: 1"></div>
+<script>
+    // Initialize and add the map
+    function initMap() {
+        // The location of Atlanta
+        var Atlanta = {lat: 33.749, lng: -84.388};
+        // The map, centered at Atlanta
+        var map = new google.maps.Map(
+            document.getElementById('map'), {zoom: 11, center: Atlanta,
+                mapTypeId: 'terrain'
+            });
+        // The marker, positioned at Atlanta
+        var marker = new google.maps.Marker({position: Atlanta, map: map});
+    }
+
+</script>
+<!--Load the API from the specified URL
+* The async attribute allows the browser to render the page while the API loads
+* The key parameter will contain your own API key (which is not needed for this tutorial)
+* The callback parameter executes the initMap() function
+-->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nPW9rvm1szX6l-gXJovBUOLooyFG9AI&callback=initMap">
+</script>
+</body>
+</html>
