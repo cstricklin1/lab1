@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
 
     <!--Adding the Merriweather font.-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Merriweather">
-        <style>
-            body {
-                font-family: 'Merriweather', serif;
-                font-size: 14px;
-            }
-        </style>
+          href="https://fonts.googleapis.com/css?family=Merriweather">
+    <style>
+        body {
+            font-family: 'Merriweather', serif;
+            font-size: 14px;
+        }
+    </style>
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <style>
         /*wrapper to make card overlay map*/
-            #wrapper { position: relative; }
-            #over_map { position: absolute; top: 100px; left: 10px; z-index: 99; }
+        #wrapper { position: relative; }
+        #over_map { position: absolute; top: 100px; left: 10px; z-index: 99; }
 
         /* Used code from this tutorial:
         https://developers.google.com/maps/documentation/javascript/adding-a-google-map
@@ -40,6 +39,7 @@
             padding: 0;
         }
     </style>
+    <title></title>
 </head>
 <body>
 <nav>
@@ -55,25 +55,25 @@
 
 
 
-        <div id="wrapper">
+<div id="wrapper">
 
 
-            <div id="over_map">
-                <div class="row" style="">
-                    <div class="col s12 m6 l6">
-                        <div class="card white">
-                            <div class="card-content black-text">
-                                <span class="card-title">Welcome to LitMaps!</span>
-                                <p>Explore the literary world around you. Just click on the markers
-                                    to see what fiction has been written about the real landmarks
-                                    in your neighborhood.</p>
-                            </div>
-                        </div>
+    <div id="over_map">
+        <div class="row" style="">
+            <div class="col s12 m6 l6">
+                <div class="card white">
+                    <div class="card-content black-text">
+                        <span class="card-title">Welcome to LitMaps!</span>
+                        <p>Explore the literary world around you. Just click on the markers
+                            to see what fiction has been written about the real landmarks
+                            in your neighborhood.</p>
                     </div>
-
                 </div>
             </div>
+
         </div>
+    </div>
+</div>
 
 
 <!--The div element for the map-->
@@ -85,13 +85,84 @@
         var Atlanta = {lat: 33.749, lng: -84.388};
         // The map, centered at Atlanta
         var map = new google.maps.Map(
-            document.getElementById('map'), {zoom: 11, center: Atlanta,
+            document.getElementById('map'), {zoom: 10, center: Atlanta,
                 mapTypeId: 'terrain'
             });
-        // The marker, positioned at Atlanta
-        var marker = new google.maps.Marker({position: Atlanta, map: map});
-    }
+        // Array of markers. Code courtesy of https://www.youtube.com/watch?v=Zxf1mnP5zcw
+        var markers = [
+            {
+                coords:{lat:33.750462,lng:-84.394429},
+                content:'<h3>"Charlie Madigan Series" by Kelly Gay</h3>'
+            },
+            {
+                coords:{lat:33.727175,lng:-84.404006},
+                content:'<h3>"The Dog Star" by Donald Windham</h3>'
+            },
+            {
+                coords:{lat:33.944059,lng:-84.552152},
+                content:'<h3>"Gone With the Wind" by Margaret Mitchell</h3>'
+            },
+            {
+                coords:{lat:33.772948,lng:-84.391775},
+                content:'<h3>"Fractured" by Karen Slaughter</h3>'
+            },
+            {
+                coords:{lat:33.720721,lng:-84.37671},
+                content:'<h3>"The Forged Note" by Oscar Micheaux</h3>'
+            },
+            {
+                coords:{lat:33.850682,lng:-84.36282},
+                content:'<h3>"Peach Tree Road" by Anne Rivers Siddons</h3>'
+            },
+            //getting a weird error trying to use an apostrophe in "Butler's."
+            {
+                coords:{lat:33.770048,lng:-83.740528},
+                content:'<h3>"Rhett Butlers People" by Donald McCaig</h3>'
+            },
+            {
+                coords:{lat:33.538593,lng:-84.354568},
+                content:'<h3>"Scarlett" by  Alexandra Ripley</h3>'
+            },
+            {
+                coords:{lat:33.799643,lng:-84.327997},
+                content:'<h3>"The Stand" by  Stephen King</h3>'
+            },
+            {
+                coords:{lat:33.762739,lng:-84.371497},
+                content:'<h3>"Them: A Novel" by Nathan McCall</h3>'
+            },
+            {
+                coords:{lat:33.726849,lng:-84.270722},
+                content:'<h3>"Triptych" by Karin Slaughter</h3>'
+            },
+        ];
 
+        // Loop through markers
+        for(var i = 0;i < markers.length;i++){
+            // Add marker
+            addMarker(markers[i]);
+        }
+
+        // Add Marker Function
+        function addMarker(props){
+            var marker = new google.maps.Marker({
+                position:props.coords,
+                map:map,
+                //icon:props.iconImage
+            });
+
+            // Check content
+            if(props.content){
+                var infoWindow = new google.maps.InfoWindow({
+                    content:props.content
+                });
+
+                marker.addListener('click', function(){
+                    infoWindow.open(map, marker);
+                });
+            }
+        }
+    }
 </script>
 <!--Load the API from the specified URL
 * The async attribute allows the browser to render the page while the API loads
