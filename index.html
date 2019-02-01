@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Home</title>
 
-    <!--Adding the Merriweather font.-->
+    <!--Adding the Merriweather, Times New Roman font.-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Merriweather">
     <style>
         body {
-            font-family: 'Merriweather', serif;
+            font-family: 'Merriweather', serif, "Times New Roman";
             font-size: 14px;
         }
     </style>
@@ -16,19 +19,49 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <style>
-        /*wrapper to make card overlay map*/
-        #wrapper { position: relative; }
-        #over_map { position: absolute; top: 100px; left: 10px; z-index: 99; }
 
-        /* Used code from this tutorial:
-        https://developers.google.com/maps/documentation/javascript/adding-a-google-map
-        Changed lat and long, location text, and added our own API key
-        Set map to full page using code from this tutorial:
-        https://developers.google.com/maps/documentation/javascript/importing_data
+        <style>
+            /*wrapper to make card overlay map*/
+            #wrapper { position: relative; }
+            #over_map { position: absolute; top: 60px; left: 10px; z-index: 99; }
 
-        Set the size of the div element that contains the map */
+            /*button style*/
+            #adder {
+                position: fixed;
+                background-color: #263238;
+                color: #eceff1;
+                bottom: 25px;
+                right: 150px;
+                width: 50px;
+                height: 30px;
+                padding: 7px;
+                font-size: 15px;
+                border: 0px;
+                border-right: 1px solid gray; z-index: 100;}
+            #remover {
+                position: fixed;
+                background-color: #263238;
+                color: #eceff1;
+                bottom: 25px;
+                right: 100px;
+                width: 50px;
+                height: 30px;
+                padding: 7px;
+                font-size: 15px;
+                border: 0px;
+                z-index: 100;
+            }
+            
+            /* Used code from this tutorial:
+            https://developers.google.com/maps/documentation/javascript/adding-a-google-map
+            Changed lat and long, location text, and added our own API key
+            Set map to full page using code from this tutorial:
+            https://developers.google.com/maps/documentation/javascript/importing_data
 
+            Set the size of the div element that contains the map */
+
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
         #map {
             height: 100%;
         }
@@ -38,102 +71,248 @@
             margin: 0;
             padding: 0;
         }
+        #description {
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        #infowindow-content .title {
+            font-weight: bold;
+        }
+
+        #infowindow-content {
+            display: none;
+        }
+
+        #map #infowindow-content {
+            display: inline;
+        }
+
+        .pac-card {
+            margin: 10px 10px 0 0;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+            font-family: Roboto;
+        }
+
+        #pac-container {
+            padding-bottom: 12px;
+            margin-right: 12px;
+        }
+
+        .pac-controls {
+            display: inline-block;
+            padding: 5px 11px;
+        }
+
+        .pac-controls label {
+            font-family: Roboto;
+            font-size: 13px;
+            font-weight: 300;
+        }
+
+        #pac-input {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 400px;
+        }
+
+        #pac-input:focus {
+            border-color: #4d90fe;
+        }
+
+        #title {
+            color: #fff;
+            background-color: #4d90fe;
+            font-size: 25px;
+            font-weight: 500;
+            padding: 6px 12px;
+        }
+        #target {
+            width: 345px;
+        }
     </style>
-    <title></title>
 </head>
 <body>
 <nav>
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Logo</a>
+    <div class="nav-wrapper blue-grey darken-4">
+        <a href="#" class="brand-logo">LitMaps</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="sass.html">Sass</a></li>
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html">JavaScript</a></li>
         </ul>
     </div>
 </nav>
 
-
-
 <div id="wrapper">
-
-
     <div id="over_map">
         <div class="row" style="">
-            <div class="col s12 m6 l6">
-                <div class="card white">
-                    <div class="card-content black-text">
+            <div class="col s11 m6 l6">
+                <div id="card1" class="card white">
+                    <div class="card-content">
+                        <span class="blue-grey-text"></span>
                         <span class="card-title">Welcome to LitMaps!</span>
                         <p>Explore the literary world around you. Just click on the markers
                             to see what fiction has been written about the real landmarks
                             in your neighborhood.</p>
+
+                        <button onclick="hideBox()" class="btn white black-text z-depth-0 right-align" type="submit" name="action">
+                            Close
+                        </button>
                     </div>
                 </div>
             </div>
+            <!-- adder and remover buttons to turn map on and off -->
+            <button id="adder">ON</button>
+            <button id="remover">OFF</button>
 
         </div>
     </div>
 </div>
 
-
-<!--The div element for the map-->
+<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 <div id="map" style="z-index: 1"></div>
 <script>
-    // Initialize and add the map
-    function initMap() {
-        // The location of Atlanta
-        var Atlanta = {lat: 33.749, lng: -84.388};
-        // The map, centered at Atlanta
-        var map = new google.maps.Map(
-            document.getElementById('map'), {zoom: 10, center: Atlanta,
-                mapTypeId: 'terrain'
+    // This example adds a search box to a map, using the Google Place Autocomplete
+    // feature. People can enter geographical searches. The search box will return a
+    // pick list containing a mix of places and predicted search terms.
+
+    // This example requires the Places library. Include the libraries=places
+    // parameter when you first load the API. For example:
+    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+    function hideBox(){
+
+        let box = document.getElementById('card1');
+        box.style.display = "none";
+    }
+    function initAutocomplete() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 33.749, lng: -84.450},
+            zoom: 10,
+            mapTypeId: 'terrain'
+        });
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+            searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+            var places = searchBox.getPlaces();
+
+            if (places.length == 0) {
+                return;
+            }
+
+            // For each place, get the icon, name and location.
+            var bounds = new google.maps.LatLngBounds();
+            places.forEach(function(place) {
+                if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                }
+                var icon = {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(25, 25)
+                };
+
+                // Create a marker for each place.
+                markers.push(new google.maps.Marker({
+                    map: map,
+                    icon: icon,
+                    title: place.name,
+                    position: place.geometry.location
+                }));
+
+                if (place.geometry.viewport) {
+                    // Only geocodes have viewport.
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
             });
+            map.fitBounds(bounds);
+        });
+
+//div and variable for turning the map off and on (default on load is on) //
+
+        var mapRemove = document.getElementById('map');
+
+        // listen for click on remover button //
+        var rem = document.getElementById('remover');
+        rem.addEventListener('click', function (){
+            mapRemove.style.opacity = 0
+        });
+
+        var adds = document.getElementById('adder');
+        adds.addEventListener('click', function (){
+            mapRemove.style.opacity = 1;
+        });
+
         // Array of markers. Code courtesy of https://www.youtube.com/watch?v=Zxf1mnP5zcw
         var markers = [
             {
                 coords:{lat:33.750462,lng:-84.394429},
-                content:'<h3>"Charlie Madigan Series" by Kelly Gay</h3>'
+                content:'<h7>"Charlie Madigan Series" by Kelly Gay</h7>'
             },
             {
                 coords:{lat:33.727175,lng:-84.404006},
-                content:'<h3>"The Dog Star" by Donald Windham</h3>'
+                content:'<h7>"The Dog Star" by Donald Windham</h7>'
             },
             {
                 coords:{lat:33.944059,lng:-84.552152},
-                content:'<h3>"Gone With the Wind" by Margaret Mitchell</h3>'
+                content:'<h7>"Gone With the Wind" by Margaret Mitchell</h7>'
             },
             {
                 coords:{lat:33.772948,lng:-84.391775},
-                content:'<h3>"Fractured" by Karen Slaughter</h3>'
+                content:'<h7>"Fractured" by Karen Slaughter</h7>'
             },
             {
                 coords:{lat:33.720721,lng:-84.37671},
-                content:'<h3>"The Forged Note" by Oscar Micheaux</h3>'
+                content:'<h7>"The Forged Note" by Oscar Micheaux</h7>'
             },
             {
                 coords:{lat:33.850682,lng:-84.36282},
-                content:'<h3>"Peach Tree Road" by Anne Rivers Siddons</h3>'
+                content:'<h7>"Peach Tree Road" by Anne Rivers Siddons</h7>'
             },
             //getting a weird error trying to use an apostrophe in "Butler's."
             {
                 coords:{lat:33.770048,lng:-83.740528},
-                content:'<h3>"Rhett Butlers People" by Donald McCaig</h3>'
+                content:'<h7>"Rhett Butlers People" by Donald McCaig</h7>'
             },
             {
                 coords:{lat:33.538593,lng:-84.354568},
-                content:'<h3>"Scarlett" by  Alexandra Ripley</h3>'
+                content:'<h7>"Scarlett" by  Alexandra Ripley</h7>'
             },
             {
                 coords:{lat:33.799643,lng:-84.327997},
-                content:'<h3>"The Stand" by  Stephen King</h3>'
+                content:'<h7>"The Stand" by  Stephen King</h7>'
             },
             {
                 coords:{lat:33.762739,lng:-84.371497},
-                content:'<h3>"Them: A Novel" by Nathan McCall</h3>'
+                content:'<h7>"Them: A Novel" by Nathan McCall</h7>'
             },
             {
                 coords:{lat:33.726849,lng:-84.270722},
-                content:'<h3>"Triptych" by Karin Slaughter</h3>'
+                content:'<h7>"Triptych" by Karin Slaughter</h7>'
             },
         ];
 
@@ -164,13 +343,7 @@
         }
     }
 </script>
-<!--Load the API from the specified URL
-* The async attribute allows the browser to render the page while the API loads
-* The key parameter will contain your own API key (which is not needed for this tutorial)
-* The callback parameter executes the initMap() function
--->
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nPW9rvm1szX6l-gXJovBUOLooyFG9AI&callback=initMap">
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3nPW9rvm1szX6l-gXJovBUOLooyFG9AI&libraries=places&callback=initAutocomplete"
+        async defer></script>
 </body>
 </html>
