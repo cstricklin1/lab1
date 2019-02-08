@@ -1,3 +1,8 @@
+<!--Functionality - Must be live must have a working URL that links to your site.-->
+<!--Functionality - Website properly loads.-->
+<!--Functionality - Commented code-->
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,59 +11,123 @@
     <title>Home</title>
 
     <!--Adding the Merriweather, Times New Roman font.-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Merriweather">
-    <style>
-        body {
-            font-family: 'Merriweather', serif, "Times New Roman";
-            font-size: 14px;
-        }
-    </style>
+    <!--Design - Embedded font-->
+    <!--Design - Visual Design principles-->
 
-    <!-- Compiled and minified JavaScript -->
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+   <link rel="stylesheet"
+         href="https://fonts.googleapis.com/css?family=Merriweather">
+   <style>
+       body {
+           font-family: 'Merriweather', serif, "Times New Roman";
+           font-size: 14px;
+       }
+   </style>
+
+   <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 
-        <style>
-            /*wrapper to make card overlay map*/
-            #wrapper { position: relative; }
-            #over_map { position: absolute; top: 60px; left: 10px; z-index: 99; }
+    <style>
+        /*wrapper to make collapsible and buttons overlay map*/
+        #wrapper { position: relative; }
+        #over_map { position: absolute; top: 60px; left: 10px; z-index: 99; }
 
-            /*button style*/
-            #adder {
-                position: fixed;
-                background-color: #263238;
-                color: #eceff1;
-                bottom: 25px;
-                right: 150px;
-                width: 50px;
-                height: 30px;
-                padding: 7px;
-                font-size: 15px;
-                border: 0px;
-                border-right: 1px solid gray; z-index: 100;}
-            #remover {
-                position: fixed;
-                background-color: #263238;
-                color: #eceff1;
-                bottom: 25px;
-                right: 100px;
-                width: 50px;
-                height: 30px;
-                padding: 7px;
-                font-size: 15px;
-                border: 0px;
-                z-index: 100;
-            }
-            
-            /* Used code from this tutorial:
-            https://developers.google.com/maps/documentation/javascript/adding-a-google-map
-            Changed lat and long, location text, and added our own API key
-            Set map to full page using code from this tutorial:
-            https://developers.google.com/maps/documentation/javascript/importing_data
+        /* Style for the collapsible content button to open and close the collapsible  */
+        /*  Functionality - Mobile responsive */
+        /*  Design - Typographical design */
 
-            Set the size of the div element that contains the map */
+
+
+                 .collapsible {
+             background-color: #364046;
+             color: #f5f8fa;
+             position: fixed;
+             top: 175px;
+             width: 30%;
+             cursor: pointer;
+             padding: 18px;
+             border: none;
+             text-align: left;
+             outline: none;
+             font-family: 'Merriweather', serif, "Times New Roman";
+             font-size: 24px;
+         }
+
+         /* Symbol on collapsible button to indicate whether the content is open or closed:*/
+        .collapsible:after {
+            content: '\02795'; /* Unicode character for "plus" sign (+) */
+            font-size: 13px;
+            color: #eceff1;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2796"; /* Unicode character for "minus" sign (-) */
+        }
+
+        /* Adds a background color to the collapsible button when clicked on or hovered over */
+        .active, .collapsible:hover {
+            background-color: #e53935;
+        }
+
+        .disabled {
+            background-color: #263238;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Style the collapsible content. Note: hidden by default */
+        .content {
+            background-color: #fafafa;
+            font-family: Roboto,sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            position: fixed;
+            top: 250px;
+            width: 30%;
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+        }
+
+        /*style for the map turn off/turn on buttons */
+        #adder {
+            background-color: #263238;
+            color: #eceff1;
+            position: fixed;
+            bottom: 25px;
+            right: 150px;
+            width: 50px;
+            height: 30px;
+            padding: 7px;
+            font-size: 15px;
+            border: 0px;
+            border-right: 1px solid gray; z-index: 100;}
+        #remover {
+            background-color: #263238;
+            color: #eceff1;
+            position: fixed;
+            bottom: 25px;
+            right: 100px;
+            width: 50px;
+            height: 30px;
+            padding: 7px;
+            font-size: 15px;
+            border: 0px;
+            z-index: 100;
+        }
+
+        /* Used code from this tutorial:
+        https://developers.google.com/maps/documentation/javascript/adding-a-google-map
+        Changed lat and long, location text, and added our own API key
+        Set map to full page using code from this tutorial:
+        https://developers.google.com/maps/documentation/javascript/importing_data
+
+        Set the size of the div element that contains the map */
 
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
@@ -72,7 +141,7 @@
             padding: 0;
         }
         #description {
-            font-family: Roboto;
+            font-family: Roboto, sans-serif;
             font-size: 15px;
             font-weight: 300;
         }
@@ -97,7 +166,7 @@
             outline: none;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
             background-color: #fff;
-            font-family: Roboto;
+            font-family: Roboto,sans-serif;
         }
 
         #pac-container {
@@ -111,14 +180,14 @@
         }
 
         .pac-controls label {
-            font-family: Roboto;
+            font-family: Roboto, sans-serif;
             font-size: 13px;
             font-weight: 300;
         }
 
         #pac-input {
             background-color: #fff;
-            font-family: Roboto;
+            font-family: Roboto, sans-serif;
             font-size: 15px;
             font-weight: 300;
             margin-left: 12px;
@@ -152,32 +221,33 @@
     </div>
 </nav>
 
-<div id="wrapper">
-    <div id="over_map">
-        <div class="row" style="">
-            <div class="col s11 m6 l6">
-                <div id="card1" class="card white">
-                    <div class="card-content">
-                        <span class="blue-grey-text"></span>
-                        <span class="card-title">Welcome to LitMaps!</span>
-                        <p>Explore the literary world around you. Just click on the markers
-                            to see what fiction has been written about the real landmarks
-                            in your neighborhood.</p>
+<div id="over_map">
 
-                        <button onclick="hideBox()" class="btn white black-text z-depth-0 right-align" type="submit" name="action">
-                            Close
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!-- adder and remover buttons to turn map on and off -->
-            <button id="adder">ON</button>
-            <button id="remover">OFF</button>
 
-        </div>
+    <!-- collapsible button class and div for content ("Welcome to LitMaps!" instructions) -->
+    <button class="collapsible">Welcome to LitMaps!</button>
+    <div class="content">
+        <p>Explore the literary world around you. Just click on the markers
+            to see what fiction has been written about the real landmarks
+            in your neighborhood.</p>
     </div>
+
+    <!-- disabled button class -->
+    <div class="button disabled">
+    </div>
+
+    <!-- active button class -->
+    <!--  <div class="button active"> -->
+    <!-- </div> -->
+
+    <!-- adder and remover buttons to turn map on and off -->
+    <button id="adder">ON</button>
+    <button id="remover">OFF</button>
+
 </div>
 
+<!-- Design - Proper user inputs-->
+<!-- Interactive - Dynamic-->
 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 <div id="map" style="z-index: 1"></div>
 <script>
@@ -190,19 +260,20 @@
     // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
     function hideBox(){
 
-        let box = document.getElementById('card1');
-        box.style.display = "none";
+//Interactive - API
     }
     function initAutocomplete() {
         var map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 33.749, lng: -84.450},
             zoom: 10,
             mapTypeId: 'terrain'
+           // Design - Image quality
+
         });
         // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
         var searchBox = new google.maps.places.SearchBox(input);
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        map.controls[google.maps.ControlPosition.LEFT_TOP].push(input);
 
         // Bias the SearchBox results towards current map's viewport.
         map.addListener('bounds_changed', function() {
@@ -235,6 +306,7 @@
                 };
 
                 // Create a marker for each place.
+                //Interactive - API results shown
                 markers.push(new google.maps.Marker({
                     map: map,
                     icon: icon,
@@ -252,7 +324,25 @@
             map.fitBounds(bounds);
         });
 
-//div and variable for turning the map off and on (default on load is on) //
+
+        // Collapsible variable, document object, and event handler //
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+
+
+        //div and variable for turning the map off and on (default on load is on) //
 
         var mapRemove = document.getElementById('map');
 
@@ -347,3 +437,5 @@
         async defer></script>
 </body>
 </html>
+
+
